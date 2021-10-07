@@ -20,6 +20,9 @@
     "dependencies": {
         "@inertiajs/inertia": "^0.10.1",
         "@inertiajs/inertia-vue3": "^0.5.2",
+        "@inertiajs/progress": "^0.2.6",
+        "install": "^0.13.0",
+        "npm": "^7.24.2",
         "vue": "^3.2.19"
     }
 }
