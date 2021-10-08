@@ -1,7 +1,15 @@
 FROM php:8.0-fpm-alpine
 
+ENV PHPUSER=laravel
+ENV PHPGROUP=laravel
+
+RUN adduser -g ${PHPGROUP} -s /bin/sh -D ${PHPUSER}
+
+RUN sed -i "s/user = www-data/user = ${PHPUSER}/g" /usr/local/etc/php-fpm.d/www.conf
+RUN sed -i "s/group = www-data/group = ${PHPGROUP}/g" /usr/local/etc/php-fpm.d/www.conf
+
 RUN mkdir -p /var/www/html
 
-RUN apk --no-cache add shadow && usermod -u 1000 www-data
-
 RUN docker-php-ext-install pdo pdo_mysql
+
+CMD ["php-fpm", "-y", "/usr/local/etc/php-fpm.conf", "-R"]

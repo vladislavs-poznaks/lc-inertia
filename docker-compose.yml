@@ -52,7 +52,9 @@ services:
       - laravel
 
   composer:
-    image: composer:latest
+    build:
+        context: .docker
+        dockerfile: composer.dockerfile
     container_name: composer
     working_dir: /var/www/html
     volumes:
