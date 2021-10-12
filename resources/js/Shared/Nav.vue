@@ -1,6 +1,6 @@
 <template>
-    <nav class="mt-4">
-        <ul>
+    <nav class="ml-6">
+        <ul class="flex space-x-4">
             <li>
                 <NavLink href="/" :active="$page.component === 'Home'">Home</NavLink>
             </li>
