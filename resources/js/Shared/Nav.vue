@@ -19,10 +19,9 @@
 </template>
 
 <script>
-import {Link} from '@inertiajs/inertia-vue3';
 import NavLink from '../Shared/NavLink';
 
 export default {
-    components: {Link, NavLink},
+    components: {NavLink},
 }
 </script>
