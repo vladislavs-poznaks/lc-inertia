@@ -6,15 +6,3 @@
         <Link href="/users" class="text-blue-400" preserve-scroll>Refresh</Link>
     </div>
 </template>
-
-<script>
-import Layout from '../Shared/Layout';
-
-export default {
-    layout: Layout,
-
-    props: {
-        time: String,
-    }
-}
-</script>

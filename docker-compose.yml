@@ -19,8 +19,8 @@ services:
       - php
       - mysql
     ports:
-      - 80:80
-      - 443:443
+      - '80:80'
+      - '443:443'
     volumes:
       - .:/var/www/html
     networks:
