@@ -1,5 +1,9 @@
 <template>
-    <h1 class="text-3xl mb-4">Users</h1>
+    <div class="flex justify-between mb-4">
+        <h1 class="text-3xl">Users</h1>
+        <input v-model="search" type="text" placeholder="Search..." class="border px-4 py-2 rounded-lg">
+    </div>
+
     <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -33,15 +37,30 @@
 </template>
 
 <script>
-import Layout from '../Shared/Layout';
-import Pagination from "../Shared/Pagination";
+import Pagination from '../Shared/Pagination';
 
 export default {
-    components: {Pagination},
-    layout: Layout,
+    components: { Pagination },
 
     props: {
         users: Object,
+        filters: Object
+    },
+
+    data() {
+        return {
+            search: this.filters.search
+        }
+    },
+
+    watch: {
+        search(value) {
+            this.$inertia.get('/users', { search: value }, {
+                preserveState: true,
+                replace: true
+            });
+        }
     }
 }
+
 </script>

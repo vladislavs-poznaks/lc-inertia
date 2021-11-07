@@ -5,10 +5,12 @@ import { InertiaProgress } from '@inertiajs/progress'
 import Layout from "./Shared/Layout";
 
 createInertiaApp({
-    resolve: async name => {
-        let page = await(import(`./Pages/${name}`)).default
+    resolve: name => {
+        let page = require(`./Pages/${name}`).default;
+
         page.layout ??= Layout;
-        return page
+
+        return page;
     },
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
