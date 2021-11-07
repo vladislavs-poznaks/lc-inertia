@@ -8,15 +8,7 @@
             <Nav/>
         </header>
     </section>
-
-    <section>
-        <iframe height="200px" width="100%" frameborder="no" scrolling="no" seamless
-                src="https://player.simplecast.com/10b6871b-9efe-42db-bfd8-caa52bdc0d04?dark=false"
-        >
-        </iframe>
-    </section>
-
-    <section class="p-6">
+    <section class="container mx-auto p-6">
         <slot/>
     </section>
 </template>
