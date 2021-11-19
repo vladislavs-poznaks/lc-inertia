@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('/users', function () {
-    return inertia('Users', [
+    return inertia('Users/Index', [
         'users' => User::query()
             ->when(request('search'), fn(Builder $query, $search) => $query->where('name', 'like', "%{$search}%"))
             ->paginate(10)
@@ -31,6 +32,22 @@ Route::get('/users', function () {
             ]),
         'filters' => request()->only('search')
     ]);
+});
+
+Route::get('/users/create', function () {
+    return inertia('Users/Create');
+});
+
+Route::post('/users', function (Request $request) {
+    $attributes =  $request->validate([
+        'name' => 'required',
+        'email' => 'required',
+        'password' => 'required',
+    ]);
+
+    User::create($attributes);
+
+    return redirect('/users');
 });
 
 Route::get('/settings', function () {
