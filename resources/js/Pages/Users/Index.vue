@@ -39,31 +39,24 @@
 
 </template>
 
-<script>
+<script setup>
 import Pagination from '../../Shared/Pagination';
+import debounce from "lodash/debounce";
+import {ref, watch} from "vue";
+import {Inertia} from "@inertiajs/inertia";
 
-export default {
-  components: {Pagination},
+let props = defineProps({
+  users: Object,
+  filters: Object,
+});
 
-  props: {
-    users: Object,
-    filters: Object
-  },
+let search = ref(props.filters.search);
 
-  data() {
-    return {
-      search: this.filters.search
-    }
-  },
-
-  watch: {
-    search(value) {
-      this.$inertia.get('/users', {search: value}, {
-        preserveState: true,
-        replace: true
-      });
-    }
-  }
-}
+watch(search, debounce(function (value) {
+  Inertia.get('/users', { search: value }, {
+    preserveState: true,
+    replace: true,
+  })
+}, 300));
 
 </script>
