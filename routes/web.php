@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,14 +39,20 @@ Route::middleware('auth')->group(function () {
                 ->through(fn($user) => [
                     'id' => $user->id,
                     'name' => $user->name,
+                    'can' => [
+                        'edit' => Auth::user()->can('edit', $user)
+                    ],
                 ]),
-            'filters' => request()->only('search')
+            'filters' => request()->only('search'),
+            'can' => [
+                'createUser' => Auth::user()->can('create', User::class)
+            ],
         ]);
     });
 
     Route::get('/users/create', function () {
         return inertia('Users/Create');
-    });
+    })->middleware('can:create,App\Models\User');
 
     Route::post('/users', function (Request $request) {
         $attributes = $request->validate([
@@ -57,7 +64,7 @@ Route::middleware('auth')->group(function () {
         User::create($attributes);
 
         return redirect('/users');
-    });
+    })->middleware('can:create,App\Models\User');
 
     Route::get('/settings', function () {
         return inertia('Settings');
