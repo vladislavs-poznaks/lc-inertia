@@ -24,7 +24,7 @@
                 </div>
               </td>
               <td v-if="user.can.edit" class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <a :href="`/user/${user.id}/edit`"
+                <a :href="`/users/${user.id}/edit`"
                    class="text-indigo-600 hover:text-indigo-900">Edit</a>
               </td>
             </tr>

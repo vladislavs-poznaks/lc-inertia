@@ -54,17 +54,38 @@ Route::middleware('auth')->group(function () {
         return inertia('Users/Create');
     })->middleware('can:create,App\Models\User');
 
+    Route::get('/users/{user}/edit', function (User $user) {
+        return inertia('Users/Edit', [
+            'user' => [
+                'name' => $user->name,
+                'email' => $user->email,
+            ],
+        ]);
+    })->middleware('can:edit,user');
+
     Route::post('/users', function (Request $request) {
         $attributes = $request->validate([
             'name' => 'required',
             'email' => 'required',
-            'password' => 'required',
+            'password' => 'sometimes',
         ]);
 
         User::create($attributes);
 
         return redirect('/users');
     })->middleware('can:create,App\Models\User');
+
+    Route::match(['PUT', 'PATCH'],'/users/{user}', function (Request $request, User $user) {
+        $attributes = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        $user->update($attributes);
+
+        return redirect('/users');
+    })->middleware('can:edit,user');
 
     Route::get('/settings', function () {
         return inertia('Settings');
