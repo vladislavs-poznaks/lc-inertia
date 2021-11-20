@@ -21,7 +21,7 @@ export default {
 
     computed: {
         username() {
-            return this.$page.props.auth.user.username;
+            return this.$page.props.auth ? this.$page.props.auth.user.username : "Guest";
         }
     }
 }
